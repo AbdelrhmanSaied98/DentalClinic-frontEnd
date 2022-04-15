@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+    <div class="form-group">
+      <label for="power">Select Type of Booking</label>
+      <br>
+      <select class="form-control" id="power" required [(ngModel)]="choosedType" name="date">
+        <option *ngFor="let pow of availableDate" [value]="pow">{{pow}}</option>
+      </select>
+    </div>
+    <input type="submit" [hidden]="showBill" value="Book">
+  </form>
+  <br>
+  <br>
+  <div [hidden]="!showBill">
+    <h3>Receipt</h3>
+    <br>
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- Position Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="price">
+          <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.price}} </mat-cell>
+        </ng-container>
+    
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <br>
+      <br>
+      <button (click)="addProcedure()">Add Procdure</button>
+      <button (click)="getDocotorAssessment()">Show Assessment</button>
+      <button (click)="back()">Back</button>
+  </div>
+
+  <div [hidden]="!showAssessment">
+
+    <br>
+    <mat-table [dataSource]="dataSourceAssessment" class="mat-elevation-z8">
+      <!-- Position Column -->
+      <ng-container matColumnDef="diagnosis">
+        <mat-header-cell *matHeaderCellDef> Diagnosis </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.diagnosis}} </mat-cell>
+      </ng-container>
+    
+      <!-- Name Column -->
+      <ng-container matColumnDef="prescription">
+        <mat-header-cell *matHeaderCellDef> Prescription </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.prescription}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="lab">
+        <mat-header-cell *matHeaderCellDef> Lab </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.lab}} </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumnsAssessment"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumnsAssessment;"></mat-row>
+    </mat-table>
+  </div>
+  
+</body>
+
+</html>
